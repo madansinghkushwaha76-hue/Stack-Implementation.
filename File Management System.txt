@@ -1,0 +1,156 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+
+using namespace std;
+
+class FileManager
+{
+private:
+    string fileName;
+
+public:
+
+    void createFile()
+    {
+        cout << "Enter File Name : ";
+        cin >> fileName;
+
+        ofstream file(fileName);
+
+        if(file)
+            cout << "File Created Successfully.\n";
+        else
+            cout << "Error Creating File.\n";
+
+        file.close();
+    }
+
+    void writeFile()
+    {
+        cout << "Enter File Name : ";
+        cin >> fileName;
+
+        ofstream file(fileName);
+
+        if(!file)
+        {
+            cout << "Error Opening File.\n";
+            return;
+        }
+
+        cin.ignore();
+
+        string data;
+
+        cout << "Enter Data : ";
+        getline(cin,data);
+
+        file << data;
+
+        file.close();
+
+        cout << "Data Written Successfully.\n";
+    }
+
+    void readFile()
+    {
+        cout << "Enter File Name : ";
+        cin >> fileName;
+
+        ifstream file(fileName);
+
+        if(!file)
+        {
+            cout << "File Not Found.\n";
+            return;
+        }
+
+        string line;
+
+        cout << "\n----- File Content -----\n";
+
+        while(getline(file,line))
+        {
+            cout << line << endl;
+        }
+
+        file.close();
+    }
+
+    void appendFile()
+    {
+        cout << "Enter File Name : ";
+        cin >> fileName;
+
+        ofstream file(fileName,ios::app);
+
+        if(!file)
+        {
+            cout << "Error Opening File.\n";
+            return;
+        }
+
+        cin.ignore();
+
+        string data;
+
+        cout << "Enter Data to Append : ";
+        getline(cin,data);
+
+        file << endl << data;
+
+        file.close();
+
+        cout << "Data Appended Successfully.\n";
+    }
+};
+
+int main()
+{
+    FileManager fm;
+
+    int choice;
+
+    do
+    {
+        cout << "\n===== FILE MANAGEMENT SYSTEM =====\n";
+        cout << "1. Create File\n";
+        cout << "2. Write File\n";
+        cout << "3. Read File\n";
+        cout << "4. Append File\n";
+        cout << "5. Exit\n";
+
+        cout << "Enter Choice : ";
+        cin >> choice;
+
+        switch(choice)
+        {
+            case 1:
+                fm.createFile();
+                break;
+
+            case 2:
+                fm.writeFile();
+                break;
+
+            case 3:
+                fm.readFile();
+                break;
+
+            case 4:
+                fm.appendFile();
+                break;
+
+            case 5:
+                cout << "Thank You!\n";
+                break;
+
+            default:
+                cout << "Invalid Choice.\n";
+        }
+
+    }while(choice!=5);
+
+    return 0;
+}
